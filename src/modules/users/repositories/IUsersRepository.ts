@@ -1,11 +1,20 @@
-import { Users } from '@prisma/client';
-
-import ICreateUserDTO from '../dtos/ICreateUserDTO';
+import {
+  Prisma,
+  Cliente,
+  Entregador,
+  Enderecos,
+  Estabelecimento,
+  Item,
+  Pedido
+} from '@prisma/client';
 
 interface IUsersRepository {
-  findByEmailWithRelations(email: string): Promise<Users | null>;
-  findByEmailPhoneOrCpf(email: string, phone: string, cpf: string): Promise<Users | null>;
-  create(data: ICreateUserDTO): Promise<Users>;
+  createCliente(data: Prisma.ClienteCreateInput): Promise<Cliente>;
+  createEntregador(data: Prisma.EntregadorCreateInput): Promise<Entregador>;
+  createEnderecos(data: Prisma.EnderecosCreateInput): Promise<Enderecos>;
+  createEstabelecimento(data: Prisma.EstabelecimentoCreateInput): Promise<Estabelecimento>;
+  createItem(data: Prisma.ItemCreateInput): Promise<Item>;
+  createPedido(data: Prisma.PedidoCreateInput): Promise<Pedido>;
 }
 
 export default IUsersRepository;

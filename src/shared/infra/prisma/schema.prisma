@@ -8,13 +8,74 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Users {
-  id         String   @id @default(uuid())
-  name       String   @unique
-  email      String
-  cpf        String
-  phone      String
-  password   String
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+model Cliente {
+  idCliente      String      @id @default(uuid())
+  nome           String
+  cpf            String
+  numCartao      String
+  validadeCartao String
+  nomeCartao     String
+  pedidos        Pedido[]
+  enderecos      Enderecos[]
+}
+
+model Entregador {
+  idEntregador     String   @id @default(uuid())
+  nome             String
+  cpf              String
+  avaliacao        Float    @default(5)
+  meioDeTransporte String
+  pedidos          Pedido[]
+}
+
+model Enderecos {
+  idEnderecos     String           @id @default(uuid())
+  cep             String
+  estado          String
+  cidade          String
+  logradouro      String
+  numero          String
+  complemento     String
+  nomeCartao      String
+  cliente         Cliente?         @relation(fields: [clienteId], references: [idCliente], onDelete: Cascade, onUpdate: Cascade)
+  clienteId       String?
+  estabelecimento Estabelecimento?
+}
+
+model Estabelecimento {
+  idEstabelecimento String    @id @default(uuid())
+  nome              String
+  descricao         String
+  pedidos           Pedido[]
+  itens             Item[]
+  endereco          Enderecos @relation(fields: [enderecoId], references: [idEnderecos])
+  enderecoId        String    @unique
+}
+
+model Item {
+  idItem            String          @id @default(uuid())
+  nome              String
+  preco             Float
+  descricao         String
+  categoria         String
+  disponivel        Boolean         @default(false)
+  pedido            Pedido          @relation(fields: [pedidoId], references: [idPedido], onDelete: Cascade, onUpdate: Cascade)
+  pedidoId          String
+  estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [idEstabelecimento], onDelete: Cascade, onUpdate: Cascade)
+  estabelecimentoId String
+}
+
+model Pedido {
+  idPedido          String          @id @default(uuid())
+  avaliacao         Float
+  dataDeCriacao     DateTime        @default(now())
+  formaDePagamento  String
+  dataDeEntrega     DateTime
+  cliente           Cliente         @relation(fields: [clienteId], references: [idCliente], onDelete: Cascade, onUpdate: Cascade)
+  clienteId         String
+  entregador        Entregador      @relation(fields: [entregadorId], references: [idEntregador], onDelete: Cascade, onUpdate: Cascade)
+  entregadorId      String
+  estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [idEstabelecimento], onDelete: Cascade, onUpdate: Cascade)
+  estabelecimentoId String
+  itens             Item[]
 }
