@@ -42,5 +42,38 @@ export default class UsersRepository implements IUsersRepository {
     return prisma.pedido.create({ data });
   }
 
+    // Ver todos os pedidos de um cliente ordenado por data de criação (mais recentes primeiro)
+  public async getPedidosByCliente(clienteId: string): Promise<Pedido[]> {
+    return prisma.pedido.findMany({
+      where: { clienteId },
+      orderBy: { dataDeCriacao: 'desc' },
+    });
+  }
+
+  // Ver todos os estabelecimentos
+  public async getAllEstabelecimentos(): Promise<Estabelecimento[]> {
+    return prisma.estabelecimento.findMany();
+  }
+
+  // Ver todos os entregadores
+  public async getAllEntregadores(): Promise<Entregador[]> {
+    return prisma.entregador.findMany();
+  }
+
+  // Ver todos os pedidos entregues por um entregador
+  public async getPedidosByEntregador(entregadorId: string): Promise<Pedido[]> {
+    return prisma.pedido.findMany({
+      where: { entregadorId },
+      orderBy: { dataDeEntrega: 'desc' },
+    });
+  }
+
+  // Ver todos os itens de um estabelecimento, ordenados por preço (do mais barato para o mais caro)
+  public async getItensByEstabelecimento(estabelecimentoId: string): Promise<Item[]> {
+    return prisma.item.findMany({
+      where: { estabelecimentoId },
+      orderBy: { preco: 'asc' },
+    });
+  }
 
 }

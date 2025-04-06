@@ -36,7 +36,6 @@ model Enderecos {
   logradouro      String
   numero          String
   complemento     String
-  nomeCartao      String
   cliente         Cliente?         @relation(fields: [clienteId], references: [idCliente], onDelete: Cascade, onUpdate: Cascade)
   clienteId       String?
   estabelecimento Estabelecimento?

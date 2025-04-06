@@ -15,6 +15,12 @@ interface IUsersRepository {
   createEstabelecimento(data: Prisma.EstabelecimentoCreateInput): Promise<Estabelecimento>;
   createItem(data: Prisma.ItemCreateInput): Promise<Item>;
   createPedido(data: Prisma.PedidoCreateInput): Promise<Pedido>;
+
+  getPedidosByCliente(clienteId: string): Promise<Pedido[]>;
+  getAllEstabelecimentos(): Promise<Estabelecimento[]>;
+  getAllEntregadores(): Promise<Entregador[]>;
+  getPedidosByEntregador(entregadorId: string): Promise<Pedido[]>;
+  getItensByEstabelecimento(estabelecimentoId: string): Promise<Item[]>;
 }
 
 export default IUsersRepository;

@@ -26,7 +26,6 @@ model Enderecos {
   logradouro      String
   numero          String
   complemento     String
-  nomeCartao      String
   cliente         Cliente? @relation(fields: [clienteId], references: [idCliente], onDelete: Cascade, onUpdate: Cascade)
   clienteId       String?  
   estabelecimento  Estabelecimento?
@@ -50,7 +49,7 @@ model Item {
   categoria        String
   disponivel       Boolean  @default(false)  
   pedido           Pedido   @relation(fields: [pedidoId], references: [idPedido], onDelete: Cascade, onUpdate: Cascade)
-  pedidoId         String
+  pedidoId         String?
   estabelecimento  Estabelecimento  @relation(fields: [estabelecimentoId], references: [idEstabelecimento], onDelete: Cascade, onUpdate: Cascade)
   estabelecimentoId String
 }
