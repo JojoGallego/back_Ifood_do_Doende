@@ -58,8 +58,8 @@ model Item {
   descricao         String
   categoria         String
   disponivel        Boolean         @default(false)
-  pedido            Pedido          @relation(fields: [pedidoId], references: [idPedido], onDelete: Cascade, onUpdate: Cascade)
-  pedidoId          String
+  pedido            Pedido?         @relation(fields: [pedidoId], references: [idPedido], onDelete: Cascade, onUpdate: Cascade)
+  pedidoId          String?
   estabelecimento   Estabelecimento @relation(fields: [estabelecimentoId], references: [idEstabelecimento], onDelete: Cascade, onUpdate: Cascade)
   estabelecimentoId String
 }
