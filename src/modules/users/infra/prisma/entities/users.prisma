@@ -1,5 +1,5 @@
 model Cliente {
-  idCliente       String   @id @default(uuid())
+  idCliente       Int   @id @default(autoincrement())
   nome            String
   cpf             String
   numCartao       String
@@ -10,7 +10,7 @@ model Cliente {
 }
 
 model Entregador {
-  idEntregador    String   @id @default(uuid())
+  idEntregador    Int   @id @default(autoincrement())
   nome            String
   cpf             String
   avaliacao       Float    @default(5)
@@ -19,7 +19,7 @@ model Entregador {
 }
 
 model Enderecos {
-  idEnderecos     String   @id @default(uuid())
+  idEnderecos     Int   @id @default(autoincrement())
   cep             String
   estado          String
   cidade          String
@@ -27,44 +27,44 @@ model Enderecos {
   numero          String
   complemento     String
   cliente         Cliente? @relation(fields: [clienteId], references: [idCliente], onDelete: Cascade, onUpdate: Cascade)
-  clienteId       String?  
+  clienteId       Int?  
   estabelecimento  Estabelecimento?
 }
 
 model Estabelecimento {
-  idEstabelecimento String   @id @default(uuid())
+  idEstabelecimento Int   @id @default(autoincrement())
   nome              String
   descricao         String
   pedidos           Pedido[]
   itens             Item[]
   endereco          Enderecos @relation(fields: [enderecoId], references: [idEnderecos])
-  enderecoId        String     @unique
+  enderecoId        Int     @unique
 }
 
 model Item {
-  idItem           String   @id @default(uuid())
+  idItem           Int   @id @default(autoincrement())
   nome             String
   preco            Float
   descricao        String
   categoria        String
   disponivel       Boolean  @default(false)  
   pedido           Pedido?   @relation(fields: [pedidoId], references: [idPedido], onDelete: Cascade, onUpdate: Cascade)
-  pedidoId         String?
+  pedidoId         Int?
   estabelecimento  Estabelecimento  @relation(fields: [estabelecimentoId], references: [idEstabelecimento], onDelete: Cascade, onUpdate: Cascade)
-  estabelecimentoId String
+  estabelecimentoId Int
 }
 
 model Pedido {
-  idPedido         String   @id @default(uuid())
+  idPedido         Int   @id @default(autoincrement())
   avaliacao        Float
   dataDeCriacao    DateTime @default(now())
   formaDePagamento String
   dataDeEntrega    DateTime
   cliente          Cliente  @relation(fields: [clienteId], references: [idCliente], onDelete: Cascade, onUpdate: Cascade)
-  clienteId        String
+  clienteId        Int
   entregador       Entregador  @relation(fields: [entregadorId], references: [idEntregador], onDelete: Cascade, onUpdate: Cascade)
-  entregadorId     String
+  entregadorId     Int
   estabelecimento  Estabelecimento  @relation(fields: [estabelecimentoId], references: [idEstabelecimento], onDelete: Cascade, onUpdate: Cascade)
-  estabelecimentoId String
+  estabelecimentoId Int
   itens            Item[]
 }
